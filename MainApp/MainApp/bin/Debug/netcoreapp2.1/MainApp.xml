@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MainApp</name>
+    </assembly>
+    <members>
+        <member name="M:MainApp.Controllers.ApplicationController.Index(System.String)">
+            GET Application/Index
+            <summary>
+            Shows list of applications
+            </summary>
+            <remarks>
+            Shows list of applications proper for user role.
+            </remarks>
+            <param name="searchString">String containing search terms from View</param>
+            <returns>List of applications</returns>
+        </member>
+    </members>
+</doc>
