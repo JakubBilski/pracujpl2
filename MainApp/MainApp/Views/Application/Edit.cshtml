@@ -1,0 +1,61 @@
+﻿@model MainApp.Models.Application
+
+@{
+    ViewData["Title"] = "Edit application";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Edit application</h2>
+        @using (Html.BeginForm("Create"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName)
+                @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName)
+                @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PhoneNumber)
+                @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EmailAddress)
+                @Html.EditorFor(m => m.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.EmailAddress, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ContactAgreement)
+                @Html.EditorFor(m => m.ContactAgreement, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.ContactAgreement, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.File, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.TextBoxFor(m => m.File, new { type = "file" })
+                @Html.ValidationMessageFor(m => m.File)
+            </div>
+            <a asp-area="" asp-controller="Application" asp-action="Index">
+                <button type="button" class="btn btn-rounded btn-secondary mr-2">
+                    <i class="fa fa-chevron-left pr-2"></i>
+                    Cancel
+                </button>
+            </a>
+            <button type="submit" class="btn btn-rounded btn-primary">
+                <i class="fa fa-check pr-2"></i>
+                Save
+            </button>
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

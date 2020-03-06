@@ -1,0 +1,59 @@
+﻿@{
+    //MainApp.Authorization.Role role;
+    //try
+    //{
+    //    role = (MainApp.Authorization.Role)Context.Items["role"];
+    //    switch (role)
+    //    {
+    //        case MainApp.Authorization.Role.CANDIDATE:
+    //            Layout = "_LayoutCandidate";
+    //            break;
+    //        case MainApp.Authorization.Role.HR:
+    //            Layout = "_LayoutHR";
+    //            break;
+    //        case MainApp.Authorization.Role.ADMIN:
+    //            Layout = "_LayoutAdmin";
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
+    //catch (Exception e)
+    //{
+    //    Layout = "_LayoutAdmin";
+    //    return;
+    //}
+
+    switch (ViewData["role"])
+    {
+        case MainApp.Authorization.Role.CANDIDATE:
+            Layout = "_LayoutCandidate";
+            break;
+        case MainApp.Authorization.Role.HR:
+            Layout = "_LayoutHR";
+            break;
+        case MainApp.Authorization.Role.ADMIN:
+            Layout = "_LayoutAdmin";
+            break;
+        default:
+            Layout = "_LayoutAdmin";
+            break;
+    }
+
+    //if (MainApp.Authorization.AuthorizationTools.IsAdmin(this.User)
+    //{
+    //    Layout = "_LayoutAdmin";
+    //}
+    //else if(this.User.IsInRole("HR"))
+    //{
+    //    Layout = "_LayoutHR";
+    //}
+    //else if(this.User.IsInRole("Candidate"))
+    //{
+    //    Layout = "_LayoutCandidate";
+    //}
+    //else
+    //{
+    //    Layout = "_LayoutAdmin";
+    //}
+}

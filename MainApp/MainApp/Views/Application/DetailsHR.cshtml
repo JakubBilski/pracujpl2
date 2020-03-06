@@ -1,0 +1,210 @@
+﻿@model MainApp.Models.ApplicationWithComment
+
+@{
+    ViewData["Title"] = Model.FirstName + " " + Model.LastName;
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="d-flex align-items-center">
+            <div class="pr-3" style="font-size: 25px">
+                <a href="@Url.Action("Index", "Applications")">
+                    <i class="fa fa-chevron-circle-left"></i>
+                </a>
+            </div>
+            <h3 class="mb-1">
+                Details
+            </h3>
+        </div>
+    </div>
+    <div class="pt-2">
+        <div>
+            <div class="offer-details">
+                <h4 class="mb-0 mt-2">@(Model.JobOffer.JobTitle + ": " + Model.LastName + "'s Application")</h4>
+                <label>Job offer:</label>
+                <div class="content">@Model.JobOffer.JobTitle</div>
+                <label>Company:</label>
+                <div class="content">@Model.JobOffer.HR.Company.Name</div>
+                <label>First name:</label>
+                <div class="content">@Model.FirstName</div>
+                <label>Last name:</label>
+                <div class="content">@Model.LastName</div>
+                <label>Email adress:</label>
+                <div class="content">@Model.EmailAddress</div>
+                <label>Phone number:</label>
+                <div class="content">@Model.PhoneNumber</div>
+                <label>Cv url:</label>
+                <div class="content">@Model.CvUrl</div>
+                <label>Contact agreement:</label>
+                <div class="content">@Model.ContactAgreement</div>
+                <label>Status:</label>
+                <div class="content">@Model.State</div>
+            </div>
+            @if (Model.State == "Pending")
+            {
+                <div class="pt-4">
+                    <button class="btn btn-rounded mx-2"
+                            data-toggle="modal"
+                            data-target="#confirm-accept">
+                        <i class="fa fa-check-circle pr-2"></i>
+                        Accept
+                    </button>
+                </div>
+                <div class="pt-4">
+                    <button class="btn btn-rounded btn-danger mx-2"
+                            data-toggle="modal"
+                            data-target="#confirm-reject">
+                        <i class="fa fa-times-circle pr-2"></i>
+                        Reject
+                    </button>
+                </div>
+            }
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Comments</th>
+                        <th style="width: 20px"></th>
+                    </tr>
+                </thead>
+                <tbody id="myBody">
+                    @foreach (var comment in Model.Comments)
+                    {
+                    <tr>
+                        <td>@comment.Text</td>
+                        @using (Html.BeginForm("DeleteCommentAjax", "Application", new { comment.Id }, FormMethod.Post, null, new { style = "display:inline;", id="deleteForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <td>
+                                <button type="submit" class="btn btn-rounded btn-primary" id="deleteSubmit">
+                                    <i class="fa fa-trash pr-2"></i>
+                                    Delete
+                                </button>
+                            </td>
+                        }
+                    </tr>
+                    }
+                    </tbody>
+                <tbody>
+                    <tr>
+                        @using (Html.BeginForm("CreateCommentAjax", "Application", null, FormMethod.Post, null, new { style = "display:inline;", id = "createForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(m => m.Id)
+                            <td>
+                                <div class="form-group">
+                                    @Html.EditorFor(m => m.CommentText, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.CommentText)
+                                </div>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-rounded btn-primary" id="createSubmit">
+                                    <i class="fa fa-check pr-2"></i>
+                                    Comment
+                                </button>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirm-accept" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Accept Application</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="font-weight-bold mb-0">Are you sure you want to accept this application?</p>
+                <p class="text-danger mb-0"><small>This action cannot be undone.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded" data-dismiss="modal">
+                    <i class="fa fa-chevron-left pr-2"></i>
+                    Cancel
+                </button>
+                @using (Html.BeginForm("Accept", "Application", new { Model.Id }, FormMethod.Post, null, new { style = "display:inline;" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-rounded btn-danger">
+                        <i class="fa fa-check-circle pr-2"></i>
+                        Accept
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirm-reject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reject Application</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="font-weight-bold mb-0">Are you sure you want to reject this application?</p>
+                <p class="text-danger mb-0"><small>This action cannot be undone.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded" data-dismiss="modal">
+                    <i class="fa fa-chevron-left pr-2"></i>
+                    Cancel
+                </button>
+                @using (Html.BeginForm("Reject", "Application", new { Model.Id }, FormMethod.Post, null, new { style = "display:inline;" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-rounded btn-danger">
+                        <i class="fa fa-times-circle pr-2"></i>
+                        Reject
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            $('#createSubmit').on('click', function (evt) {
+                alert("I'm in");
+                evt.preventDefault();
+                $.post($('#createForm').attr("action"), $('#createForm').serialize(), function (data) {
+                    alert("I'm in the function");
+                    $('#myBody tr').remove();
+                    $.each(data, function (i, emp) {
+                        alert("I'm in the thing");
+                        var $row = $('<tr/>');
+                        $row.append($('<td/>').html(emp.commentText));
+                        $('#myBody').append($row);
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#deleteSubmit').on('click', function (evt) {
+                alert("I'm in");
+                evt.preventDefault();
+                $.post($('#deleteForm').attr("action"), $('#deleteForm').serialize(), function (data) {
+                    alert("I'm in the function");
+                    $('#myBody tr').remove();
+                    $.each(data, function (i, emp) {
+                        alert("I'm in the thing");
+                        var $row = $('<tr/>');
+                        $row.append($('<td/>').html(emp.commentText));
+                        $('#myBody').append($row);
+                    });
+                });
+            });
+        });
+    </script>
+    }*@

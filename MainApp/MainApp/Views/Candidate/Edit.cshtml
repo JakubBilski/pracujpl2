@@ -1,0 +1,40 @@
+﻿@model Candidate
+@{
+    ViewBag.Title = "Edit";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Edit candidate profile</h2>
+        @using (Html.BeginForm("Create"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.EmailAddress)
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName)
+                @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.LastName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName)
+                @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PhoneNumber)
+                @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.PhoneNumber)
+            </div>
+            <a asp-area="" asp-controller="Candidate" asp-action="Details" asp-route-id="@Model.Id" >
+                <button type="button" class="btn btn-rounded btn-secondary mr-2">
+                    <i class="fa fa-chevron-left pr-2" ></i>
+                    Cancel
+                </button>
+            </a>
+            <button type="submit" class="btn btn-rounded btn-primary">
+                <i class="fa fa-check pr-2" ></i>
+                Save
+            </button>
+        }
+    </div>
+</div> 

@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <a href="@Url.Action("clearContext", "Home")">
+        <button class="btn btn-rounded btn-outline-primary"
+                data-toggle="modal">
+            <i class="fa fa-eraser pr-3"></i>
+            Clear context
+        </button>
+    </a>
+    <a href="@Url.Action("addTestDataToContext", "Home")">
+        <button class="btn btn-rounded btn-outline-primary"
+                data-toggle="modal">
+            <i class="fa fa-plus pr-3"></i>
+            Add test data to context
+        </button>
+    </a>
+</div>

@@ -1,0 +1,38 @@
+﻿@model MainApp.Models.Candidate
+
+@{
+    ViewData["Title"] = "My profile details";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="d-flex align-items-center">
+            <h3 class="mb-1">
+                Details
+            </h3>
+        </div>
+    </div>
+    <div class="pt-2">
+        <div>
+            <div class="offer-details">
+                <h4 class="mb-0 mt-2">@(Model.FirstName + " " + Model.LastName)</h4>
+                <label>First name:</label>
+                <div class="content">@Model.FirstName</div>
+                <label>Last name:</label>
+                <div class="content">@Model.LastName</div>
+                <label>Email adress:</label>
+                <div class="content">@Model.EmailAddress</div>
+                <label>Phone number:</label>
+                <div class="content">@Model.PhoneNumber</div>
+                <div class="pt-4">
+                    <a asp-controller="Candidate" asp-action="Edit" asp-route-id="@Model.Id">
+                        <button class="btn btn-rounded btn-primary mx-2">
+                            <i class="fa fa-edit pr-2"></i>
+                            Edit
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

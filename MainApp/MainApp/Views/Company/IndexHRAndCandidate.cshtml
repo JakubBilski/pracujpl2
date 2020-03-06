@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MainApp.Models.Company>
+
+@{
+    ViewData["Title"] = "Companies";
+}
+
+<div class="row page-box">
+    <div class="col-sm-12">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-12 col-md-4 d-flex align-items-center py-2">
+                    <h3 class="font-weight-bold mb-0">
+                        Company list
+                    </h3>
+                    <div>
+                        <span class="badge badge-pill badge-primary align-top">
+                            @Model.Count()
+                        </span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 py-2">
+                    @using (Html.BeginForm("Index", "Company", FormMethod.Get))
+                    {
+                        <div class="input-group search-input"
+                             style="border-radius: 20px">
+                            <input name="search"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="Search by name.."
+                                   aria-label="Search by name"
+                                   aria-describedby="button-search">
+                            <div class="input-group-append">
+                                <button id="button-search"
+                                        class="btn btn-primary"
+                                        type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Company name</th>
+                    <th style="width: 20px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var hr in Model.OrderBy(h => h.Name))
+                {
+                <tr>
+                    <td>@Html.ActionLink(hr.Name, "Index", "JobOffer", new { search = hr.Name }, null)</td>
+                </tr>
+
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@model MainApp.Models.HRCreateView
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row page-box">
+    <div class="col-sm-12">
+        <h2>New HR member</h2>
+        @using (Html.BeginForm("Create"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName)
+                @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Company)
+                @Html.DropDownListFor(m => m.CompanyId,
+                    Model.Companies.Select(c => new SelectListItem {Text =c.Name, Value = c.Id.ToString() }),
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CompanyId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName)
+                @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EmailAddress)
+                @Html.EditorFor(m => m.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.EmailAddress, "", new { @class = "text-danger" })
+            </div>
+            <a asp-area="" asp-controller="HR" asp-action="Index">
+                <button type="button" class="btn btn-rounded btn-secondary mr-2">
+                    <i class="fa fa-chevron-left pr-2"></i>
+                    Cancel
+                </button>
+            </a>
+            <button type="submit" class="btn btn-rounded btn-primary">
+                <i class="fa fa-check pr-2"></i>
+                Save
+            </button>
+        }
+    </div>
+</div>
+

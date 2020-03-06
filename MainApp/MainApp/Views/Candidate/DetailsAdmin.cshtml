@@ -1,0 +1,35 @@
+﻿@model MainApp.Models.Candidate
+
+@{
+    ViewData["Title"] = Model.FirstName + " " + Model.LastName;
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="d-flex align-items-center">
+            <div class="pr-3" style="font-size: 25px">
+                <a href="@Url.Action("Index", "Candidate")">
+                    <i class="fa fa-chevron-circle-left"></i>
+                </a>
+            </div>
+            <h3 class="mb-1">
+                Details
+            </h3>
+        </div>
+    </div>
+    <div class="pt-2">
+        <div>
+            <div class="offer-details">
+                <h4 class="mb-0 mt-2">@(Model.FirstName + " " + Model.LastName)</h4>
+                <label>First name:</label>
+                <div class="content">@Model.FirstName</div>
+                <label>Last name:</label>
+                <div class="content">@Model.LastName</div>
+                <label>Email adress:</label>
+                <div class="content">@Model.EmailAddress</div>
+                <label>Phone number:</label>
+                <div class="content">@Model.PhoneNumber</div>
+            </div>
+        </div>
+    </div>
+</div>
